@@ -77,7 +77,6 @@ func initialModel() model {
 		compositions: getCompositionList("", ""),
 		screen:       "xrds",
 		yamlFields:   []textinput.Model{},
-		// yamlFields:   getYamlFields(),
 	}
 }
 
@@ -133,7 +132,6 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				xr := getXR(crd, m.selectedComposition)
 				yamlManifest := getXRYaml(xr)
 				yamlDataWithFields, yamlFields := m.getYamlDataWithFields(yamlManifest)
-				// m.yamlManifestWithFields = yamlManifest
 				m.yamlManifestWithFields = yamlDataWithFields
 				m.yamlFields = yamlFields
 				m.screen = "explain"
@@ -181,9 +179,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				xr := getXR(crd, m.selectedComposition)
 				yamlManifest := getXRYaml(xr)
 				yamlDataWithFields, _ := m.getYamlDataWithFields(yamlManifest)
-				// m.yamlManifestWithFields = yamlManifest
 				m.yamlManifestWithFields = yamlDataWithFields
-				// m.yamlManifestWithFields = yamlManifest
 			}
 		}
 	}
@@ -227,7 +223,6 @@ Sample YAML:
 			m.selectedType,
 			m.yamlManifestWithFields,
 		)
-		// TODO: Rewrite
 		var b strings.Builder
 		b.WriteString("\nFields:\n\n")
 		for i := range m.yamlFields {
@@ -236,16 +231,6 @@ Sample YAML:
 				b.WriteRune('\n')
 			}
 		}
-		// button := &blurredButton
-		// if m.focusIndex == len(m.yamlFields) {
-		// 	button = &focusedButton
-		// }
-		// fmt.Fprintf(&b, "\n\n%s\n\n", *button)
-
-		// b.WriteString(helpStyle.Render("cursor mode is "))
-		// b.WriteString(cursorModeHelpStyle.Render(m.cursorMode.String()))
-		// b.WriteString(helpStyle.Render(" (ctrl+r to change style)"))
-
 		out += b.String()
 		return out
 	case "end":
@@ -337,25 +322,6 @@ func getListModel(items []list.Item, title string) list.Model {
 	return list
 }
 
-// TODO: ?
-// func getYamlFields(yaml string) []textinput.Model {
-// 	fieldsCount := strings.Count(yaml, "INSERT_HERE")
-// 	inputs := make([]textinput.Model, fieldsCount)
-// 	for i := range inputs {
-// 		ti := textinput.New()
-// 		ti.CursorStyle = cursorStyle
-// 		ti.CharLimit = 156
-// 		ti.Placeholder = "Field " + string(i)
-// 		ti.PromptStyle = focusedStyle
-// 		ti.TextStyle = focusedStyle
-// 		ti.Width = 20
-// 		inputs[i] = ti
-// 	}
-// 	inputs[0].Focus()
-// 	return inputs
-// }
-
-// TODO: ?
 func (m *model) updateInputs(msg tea.Msg) tea.Cmd {
 	var cmds = make([]tea.Cmd, len(m.yamlFields))
 	for i := range m.yamlFields {

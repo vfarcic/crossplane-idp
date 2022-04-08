@@ -238,6 +238,7 @@ Sample YAML:
 TODO:
 
 * Edit fields
+* Contain it within a window
 * Fix the option to choose claims
 * Export to YAML
 * kubectl apply

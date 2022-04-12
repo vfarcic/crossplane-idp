@@ -29,6 +29,8 @@ go run main.go
 
 ## TODO
 
+* Create binaries for different OS
+* Create a Helm chart
 * Prepopulate fields with default values
 * Make required fields
 * Support claims

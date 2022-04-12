@@ -81,7 +81,7 @@ func initialModel() model {
 }
 
 func (m model) Init() tea.Cmd {
-	return textinput.Blink
+	return tea.EnterAltScreen
 }
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -296,7 +296,7 @@ func getXrdApiList() list.Model {
 }
 
 func getTypeList() list.Model {
-	items := []list.Item{item("Composition"), item("Claim (TODO: don't use it, it does not work!")}
+	items := []list.Item{item("Composition"), item("Claim (TODO: don't use it, it does not work!)")}
 	return getListModel(items, titleTypes)
 }
 

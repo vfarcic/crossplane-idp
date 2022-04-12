@@ -3,8 +3,6 @@ package main
 import (
 	"fmt"
 	"net/http"
-
-	"github.com/charmbracelet/bubbles/list"
 )
 
 func main() {
@@ -15,13 +13,13 @@ func main() {
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
-	items := []list.Item{}
-	compositions := getAllCompositions()
-	for _, composition := range compositions.Items {
-		if expectedKind == composition.Spec.CompositeTypeRef.Kind &&
-			expectedApi == composition.Spec.CompositeTypeRef.ApiVersion {
-			items = append(items, item(composition.Metadata.Name))
-		}
-	}
+	// items := []list.Item{}
+	// compositions := helper.getAllCompositions()
+	// for _, composition := range compositions.Items {
+	// 	if expectedKind == composition.Spec.CompositeTypeRef.Kind &&
+	// 		expectedApi == composition.Spec.CompositeTypeRef.ApiVersion {
+	// 		items = append(items, item(composition.Metadata.Name))
+	// 	}
+	// }
 	fmt.Fprintf(w, "Hello world!")
 }

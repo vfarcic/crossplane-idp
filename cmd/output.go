@@ -83,8 +83,8 @@ func getXR(crd CRD, compositionName string) XR {
 			spec["CompositionSelector"] = matchLabels
 		case "writeConnectionSecretToRef":
 			secrets := make(map[string]string)
-			secrets["name"] = InsertHere + " # The name of the secret with authentication (string)"
-			secrets["namespace"] = InsertHere + " # The namespace for the secret (string)"
+			secrets["name"] = InsertHere + "_secretName # The name of the secret with authentication (string)"
+			secrets["namespace"] = InsertHere + "_secretNamespace # The namespace for the secret (string)"
 			spec["writeConnectionSecretToRef"] = secrets
 		default:
 			switch v := value.(type) {

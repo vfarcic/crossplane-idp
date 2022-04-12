@@ -1,9 +1,8 @@
-package cmd
+package helper
 
 import (
 	"os"
 	"os/exec"
-	"strings"
 
 	"gopkg.in/yaml.v2"
 )
@@ -104,13 +103,11 @@ type (
 		Name      string
 		Namespace string
 	}
+
+	Properties interface{}
 )
 
 var allCompositions = Compositions{}
-
-func getName(fullName string) string {
-	return fullName[strings.LastIndex(fullName, "/")+1:]
-}
 
 func getAllCompositions() Compositions {
 	if len(allCompositions.Items) == 0 {
@@ -122,25 +119,4 @@ func getAllCompositions() Compositions {
 		yaml.Unmarshal([]byte(string(yamlOutput)), &allCompositions)
 	}
 	return allCompositions
-}
-
-func getCompositions(expectedApiVersion, expectedKind string) Compositions {
-	allCompositions := getAllCompositions()
-	compositions := Compositions{}
-	for _, composition := range allCompositions.Items {
-		if strings.HasPrefix(string(composition.Spec.CompositeTypeRef.ApiVersion), expectedApiVersion) && composition.Spec.CompositeTypeRef.Kind == expectedKind {
-			compositions.Items = append(compositions.Items, composition)
-		}
-	}
-	return compositions
-}
-
-func getXrds() XRDs {
-	output, err := exec.Command("kubectl", "get", "compositeresourcedefinitions.apiextensions.crossplane.io", "-o", "yaml").Output()
-	if err != nil {
-		os.Stderr.WriteString(err.Error())
-	}
-	xrds := XRDs{}
-	yaml.Unmarshal([]byte(string(output)), &xrds)
-	return xrds
 }

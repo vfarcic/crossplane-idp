@@ -206,9 +206,20 @@ func (m model) View() string {
 	case "types":
 		return m.types.View()
 	case "explain":
+		var b strings.Builder
+		for i := range m.yamlFields {
+			b.WriteString(m.yamlFields[i].View())
+			if i < len(m.yamlFields)-1 {
+				b.WriteRune('\n')
+			}
+		}
 		out := fmt.Sprintf(`XRD: %s
 Composition: %s
 Type: %s
+
+Fields:
+
+%s
 
 Sample YAML:
 
@@ -221,17 +232,9 @@ Sample YAML:
 			m.selectedXrdText,
 			m.selectedComposition,
 			m.selectedType,
+			b.String(),
 			m.yamlManifestWithFields,
 		)
-		var b strings.Builder
-		b.WriteString("\nFields:\n\n")
-		for i := range m.yamlFields {
-			b.WriteString(m.yamlFields[i].View())
-			if i < len(m.yamlFields)-1 {
-				b.WriteRune('\n')
-			}
-		}
-		out += b.String()
 		return out
 	case "end":
 		return `
@@ -335,7 +338,7 @@ func (m *model) updateInputs(msg tea.Msg) tea.Cmd {
 func (m *model) getYamlDataWithFields(yaml string) (string, []textinput.Model) {
 	// # TODO: Add default OpenAPI values to fields
 	yamlWithFields := yaml
-	insertCount := strings.Count(yaml, "INSERT_HERE")
+	insertCount := strings.Count(yaml, InsertHere)
 	if len(m.yamlFields) == 0 {
 		m.yamlFields = make([]textinput.Model, insertCount)
 		for i := range m.yamlFields {
@@ -352,7 +355,7 @@ func (m *model) getYamlDataWithFields(yaml string) (string, []textinput.Model) {
 		m.yamlFields[0].Focus()
 	}
 	for i := range m.yamlFields {
-		yamlWithFields = strings.Replace(yamlWithFields, "INSERT_HERE", m.yamlFields[i].Value(), 1)
+		yamlWithFields = strings.Replace(yamlWithFields, InsertHere, m.yamlFields[i].Value(), 1)
 	}
 	return yamlWithFields, m.yamlFields
 }

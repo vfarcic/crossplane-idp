@@ -1,0 +1,6 @@
+<h1>Compositions</h1>
+<ul>
+    {{range .Items}}
+            <li><a href="/xrd?xrdName={{.Metadata.Name}}">{{.Spec.Names.Kind}}</a></li>
+    {{end}}
+</ul>

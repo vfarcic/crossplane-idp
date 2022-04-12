@@ -1,0 +1,6 @@
+<h1>XRD: {{.Spec.Names.Kind}}</h1>
+<ul>
+    {{range .Compositions}}
+            <li><a href="composition?xrdName={{$.Metadata.Name}}&compositionName={{.Metadata.Name}}">{{.Metadata.Name}}</a></li>
+    {{end}}
+</ul>

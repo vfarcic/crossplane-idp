@@ -29,7 +29,7 @@ go run main.go
 
 ## TODO
 
-* Create binaries for different OS
+* Create container image releases
 * Create a Helm chart
 * Prepopulate fields with default values
 * Make required fields

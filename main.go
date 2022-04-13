@@ -28,7 +28,6 @@ func xrdHandler(w http.ResponseWriter, r *http.Request) {
 	xrdName := r.URL.Query().Get("xrdName")
 	xrd := helper.GetXRD(xrdName)
 	tmpl := template.Must(template.ParseFiles("src/html/xrd.tmpl"))
-	fmt.Println(xrd.Metadata.Name)
 	tmpl.Execute(w, xrd)
 }
 

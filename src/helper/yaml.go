@@ -276,7 +276,7 @@ func processMapInterface(properties interface{}, addComments bool) interface{} {
 	var subProperties interface{}
 	hasProperties := false
 	description := ""
-	xDefault := insertHere
+	xDefault := ""
 	xType := ""
 	for key, value := range properties.(map[interface{}]interface{}) {
 		if key == "properties" {
@@ -303,15 +303,19 @@ func processMapInterface(properties interface{}, addComments bool) interface{} {
 	}
 	comment := ""
 	if addComments {
+		info := fmt.Sprintf("Type: %s", xType)
+		if len(xDefault) > 0 {
+			info = fmt.Sprintf("%s; Default: %s", info, xDefault)
+		}
 		comment = fmt.Sprintf(
 			" # %s (%s)",
 			description,
-			xType,
+			info,
 		)
 	}
 	return fmt.Sprintf(
 		"%s%s",
-		xDefault,
+		insertHere,
 		comment,
 	)
 }
